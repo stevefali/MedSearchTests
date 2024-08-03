@@ -3,17 +3,18 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const { medicine } = req.query;
+  const { medicine, interactor } = req.query;
   try {
-    // res.json({ medicine: req.query.medicine });
-
     const fdaResponse = await axios.get(
       `https://api.fda.gov/drug/label.json?search=boxed_warning:${medicine}`
     );
 
     console.log(fdaResponse.data.results[0].drug_interactions);
 
-    res.json({ medicine: medicine });
+    res.json({
+      medicine: medicine,
+      interactor: interactor || "Interactor is empty!",
+    });
   } catch (err) {
     console.log(err);
   }
