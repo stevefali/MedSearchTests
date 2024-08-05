@@ -1,5 +1,11 @@
-const getInteractorMatch = (interactions, query) => {
-  const sentences = interactions.split(".");
+const getInteractorMatch = (fdaString, query) => {
+  // Remove everything inside []'s and numbers inside ()'s, but leave words inside ()'s.
+  const cleanedFdaString = fdaString.replace(
+    /(\[.*?\])|(\([^a-z].*?\))|(\s\d\.\d*?\s)|(^\d)/g,
+    ""
+  );
+
+  const sentences = cleanedFdaString.split(/(\.)([^e.g.,])/);
   const foundSentences = [];
 
   sentences.forEach((sentence) => {
